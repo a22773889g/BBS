@@ -3,8 +3,8 @@ import java.sql.*;
 public class Account {
 	private String classname = "com.mysql.jdbc.Driver";
 	private String jdbcURL = "jdbc:mysql://db.mis.kuas.edu.tw/s1104137246";
-	private String UID = "s1104137246";
-	private String PWD = "3015";
+	private String UID = "your account";
+	private String PWD = "password";
 	private Connection conn = null;
 	private String pwd;
 	String user;
@@ -67,7 +67,7 @@ public class Account {
 			Statement aStatement = conn.createStatement();
 			String query = "Select author,title from articles";
 			ResultSet rs = aStatement.executeQuery(query);
-			list += "�峹\t�@��\t���D\r\n";
+			list += "¤å³¹\t§@ªÌ\t¼ÐÃD\r\n";
 			while (rs.next()) {
 				list +=count;
 				for (int i = 1; i <= 2; i++) {
