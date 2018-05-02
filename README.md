@@ -1,5 +1,5 @@
 # Chatroom_java
-1. 先到https://dev.mysql.com/downloads/connector/j/5.1.html 下載JDBC，下載完成把JAR檔匯入library
+1.先到https://dev.mysql.com/downloads/connector/j/5.1.html 下載JDBC，下載完成把JAR檔匯入library
 
 2.開啟cmd 輸入telnet
 
