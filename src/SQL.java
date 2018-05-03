@@ -3,8 +3,8 @@ public class SQL {
 	public static void main(String[] args){
 		String classname="com.mysql.jdbc.Driver";
 		String jdbcURL="jdbc:mysql://db.mis.kuas.edu.tw/s1104137246";
-		String UID="s1104137246";
-		String PWD="3015";
+		String UID="*";
+		String PWD="*";
 		Connection conn=null;
 		try{
 			Class.forName(classname).newInstance();
