@@ -17,9 +17,9 @@ public class ChatHandler extends Thread {
 	static Vector online = new Vector(5);
 	private Room inviteRoom;
 	private String inviter;
-	private String help="/list¥i¥H¨Ó¬İ¥Ø«eªº¤å³¹¦³­ş¨Ç\r\n/room¥i¥H¦Û¤v«Ø²á¤Ñ«Ç\r\n/roomlist¥i¥H¬İ²{¦b¦³­ş¨Ç©Ğ¶¡\r\n"
-			+ "/chat¥i¥H¶i¤J²á¤Ñ«Ç\r\n/article¥i¥Hµoªí¤å³¹\r\n/look¥i¥HÆ[¬İ¤å³¹¤º®e\r\n/update¥i¥H§ó§ï¤å³¹\r\n/delete¥i¥H§R¥X¤å³¹\r\n/help¥i¥H¬İ¦³­ş¨Ç¥\¯à\r\n";
-	private String roomHelp="±z¥i¥H¨Ï¥Î/invite¨ÓÁÜ½Ğ¨ä¥L¤H¶i¤J³o­Ó²á¤Ñ«Ç\r\n¥i¥H¥ı¨Ï¥Î/user¨Ó¬İ¬İ²{¦b¦³¨º¨Ç¤H¦b½u¤W\r\n­nÂ÷¶}©Ğ¶¡½Ğ¿é¤J/exit\r\n/help¥i¥H¬İ¦¹©Ğ¦³­ş¨Ç¥\¯à\r\n";
+	private String help="/listå¯ä»¥ä¾†çœ‹ç›®å‰çš„æ–‡ç« æœ‰å“ªäº›\r\n/roomå¯ä»¥è‡ªå·±å»ºèŠå¤©å®¤\r\n/roomlistå¯ä»¥çœ‹ç¾åœ¨æœ‰å“ªäº›æˆ¿é–“\r\n"
+			+ "/chatå¯ä»¥é€²å…¥èŠå¤©å®¤\r\n/articleå¯ä»¥ç™¼è¡¨æ–‡ç« \r\n/lookå¯ä»¥è§€çœ‹æ–‡ç« å…§å®¹\r\n/updateå¯ä»¥æ›´æ”¹æ–‡ç« \r\n/deleteå¯ä»¥åˆªå‡ºæ–‡ç« \r\n/helpå¯ä»¥çœ‹æœ‰å“ªäº›åŠŸèƒ½\r\n";
+	private String roomHelp="æ‚¨å¯ä»¥ä½¿ç”¨/inviteä¾†é‚€è«‹å…¶ä»–äººé€²å…¥é€™å€‹èŠå¤©å®¤\r\nå¯ä»¥å…ˆä½¿ç”¨/userä¾†çœ‹çœ‹ç¾åœ¨æœ‰é‚£äº›äººåœ¨ç·šä¸Š\r\nè¦é›¢é–‹æˆ¿é–“è«‹è¼¸å…¥/exit\r\n/helpå¯ä»¥çœ‹æ­¤æˆ¿æœ‰å“ªäº›åŠŸèƒ½\r\n";
 	public ChatHandler(Socket socket) throws IOException {
 		this.socket = socket;
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "Big5"));
@@ -30,66 +30,66 @@ public class ChatHandler extends Thread {
 		String line;
 		synchronized (online) {
 			online.add(this);
-			this.out.println("Åwªï¨Ó¨ìlobby,¦pªG²Ä¤@¦¸¥Î½Ğ¿é¤J/regist,¦pªG¤w¦³·|­û½Ğ¿é¤J /login");
+			this.out.println("æ­¡è¿ä¾†åˆ°lobby,å¦‚æœç¬¬ä¸€æ¬¡ç”¨è«‹è¼¸å…¥/regist,å¦‚æœå·²æœ‰æœƒå“¡è«‹è¼¸å…¥ /login");
 			this.out.flush();
 		}
 		try {
 			while (!(line = in.readLine()).equalsIgnoreCase("/quit")) {
 				System.out.println(line);
 				if (line.equals("/regist")) {
-					this.out.println("½Ğ¿é¤J±b¸¹:");
+					this.out.println("è«‹è¼¸å…¥å¸³è™Ÿ:");
 					this.out.flush();
 					user = this.in.readLine();
 					System.out.println(user);
-					this.out.println("½Ğ¤J±b±K½X:");
+					this.out.println("è«‹å…¥å¸³å¯†ç¢¼:");
 					this.out.flush();
 					pwd = this.in.readLine();
 					System.out.println(pwd);
 					if(!(acc=new Account(user, pwd)).checkUser()){
 						acc.createAccount();
-						this.out.println("µù¥U¦¨¥\,½Ğ±z¿é¤J/login ¨Óµn¤J");
+						this.out.println("è¨»å†ŠæˆåŠŸ,è«‹æ‚¨è¼¸å…¥/login ä¾†ç™»å…¥");
 						this.out.flush();
 					}
 					else{
-						this.out.println("¦¹±b¤á¤w¦³¤H¡A½Ğ­«·s¿é¤J/regist¨Óµù¥U");
+						this.out.println("æ­¤å¸³æˆ¶å·²æœ‰äººï¼Œè«‹é‡æ–°è¼¸å…¥/registä¾†è¨»å†Š");
 						this.out.flush();
 					}
 				}
 				if (line.equals("/login")) {
-					this.out.println("½Ğ¿é¤J±b¸¹:");
+					this.out.println("è«‹è¼¸å…¥å¸³è™Ÿ:");
 					this.out.flush();
 					user = this.in.readLine();
 					System.out.println(user);
-					this.out.println("½Ğ¤J±K½X:");
+					this.out.println("è«‹å…¥å¯†ç¢¼:");
 					this.out.flush();
 					pwd = this.in.readLine();
 					System.out.println(pwd);
 					if ((acc = new Account(user, pwd)).check()) {
-						this.out.println("µn¤J¦¨¥\¡A±z¥i¥H¨Ï¥Î¥\¯à¤F\r\n"+help);
+						this.out.println("ç™»å…¥æˆåŠŸï¼Œæ‚¨å¯ä»¥ä½¿ç”¨åŠŸèƒ½äº†\r\n"+help);
 						this.out.flush();
 						while (!(line = in.readLine()).equalsIgnoreCase("/quit")) {
 							if (line.equals("/list")) {
 								this.out.println(acc.list());
 								this.out.flush();
 							}
-							/*if (line.equals("/article")) {
+							if (line.equals("/article")) {
 								String title, content = "";
-								this.out.println("½Ğ¿é¤J¼ĞÃD:");
+								this.out.println("è«‹è¼¸å…¥æ¨™é¡Œ:");
 								this.out.flush();
 								title = this.in.readLine();
 								System.out.println(user);
-								this.out.println("½Ğ¤J¤º®e,³Ì«á¥H.¬°µ²§ô");
+								this.out.println("è«‹å…¥å…§å®¹,æœ€å¾Œä»¥.ç‚ºçµæŸ");
 								this.out.flush();
 								while (!(line = this.in.readLine()).equalsIgnoreCase(".")) {
 									content += line + "\r\n";
 								}
 								acc.article(title, content);
-								this.out.println("µoªí¦¨¥\!!\r\n" + acc.list());
+								this.out.println("ç™¼è¡¨æˆåŠŸ!!\r\n" + acc.list());
 								this.out.flush();
 							}
 							if (line.equals("/look")) {
 								String id;
-								this.out.println("½Ğ°İ±z­n¬İ²Ä´X½g¤å³¹:");
+								this.out.println("è«‹å•æ‚¨è¦çœ‹ç¬¬å¹¾ç¯‡æ–‡ç« :");
 								this.out.flush();
 								id = this.in.readLine();
 								this.out.println(acc.look(id));
@@ -97,42 +97,42 @@ public class ChatHandler extends Thread {
 							}
 							if (line.equals("/update")) {
 								String id, content = "";
-								this.out.println("½Ğ°İ±z­n­×§ï²Ä´X½g¤å³¹:");
+								this.out.println("è«‹å•æ‚¨è¦ä¿®æ”¹ç¬¬å¹¾ç¯‡æ–‡ç« :");
 								this.out.flush();
 								id = this.in.readLine();
-								this.out.println("½Ğ¿é¤J§ó§ï«áªº¤º®e:");
+								this.out.println("è«‹è¼¸å…¥æ›´æ”¹å¾Œçš„å…§å®¹:");
 								this.out.flush();
 								while (!(line = this.in.readLine()).equalsIgnoreCase(".")) {
 									content += line + "\r\n";
 								}
 								acc.update(id, content);
-								this.out.println("­×§ï¦¨¥\!!\r\n" + acc.list());
+								this.out.println("ä¿®æ”¹æˆåŠŸ!!\r\n" + acc.list());
 								this.out.flush();
 							}
 							if (line.equals("/delete")) {
 								String id;
-								this.out.println("½Ğ°İ±z­n§R°£²Ä´X½g¤å³¹:");
+								this.out.println("è«‹å•æ‚¨è¦åˆªé™¤ç¬¬å¹¾ç¯‡æ–‡ç« :");
 								this.out.flush();
 								id = this.in.readLine();
 								if (acc.authenticate(id)) {
 									acc.delete(id);
-									this.out.println("§R°£¦¨¥\!!\r\n" + acc.list());
+									this.out.println("åˆªé™¤æˆåŠŸ!!\r\n" + acc.list());
 									this.out.flush();
 								} else {
-									this.out.println("±z¤£¬O§@ªÌ,©Ò¥H¤£¯à§R°£¦¹¤å³¹");
+									this.out.println("æ‚¨ä¸æ˜¯ä½œè€…,æ‰€ä»¥ä¸èƒ½åˆªé™¤æ­¤æ–‡ç« ");
 									this.out.flush();
 								}
-							}*/
+							}
 							if (line.equals("/room")) {
 								String message;
-								this.out.println("½Ğ¿é¤J©Ğ¶¡¦WºÙ:");
+								this.out.println("è«‹è¼¸å…¥æˆ¿é–“åç¨±:");
 								this.out.flush();
 								Room room = new Room(this.in.readLine());
 								synchronized (room.room) {
 									room.room.addElement(this);
 									roomList.addElement(room);
 								}
-								this.out.println("±z¤w¶i¤J" + room.name + "©Ğ\r\n");
+								this.out.println("æ‚¨å·²é€²å…¥" + room.name + "æˆ¿\r\n");
 								this.out.flush();
 								this.out.println(roomHelp);
 								this.out.flush();
@@ -155,8 +155,8 @@ public class ChatHandler extends Thread {
 										}
 										this.out.println(onlineList);
 										this.out.flush();
-									} /*else if (message.equals("/invite")) {
-										this.out.println("½Ğ¿é¤J­nÁÜ½Ğªº¤Hªº¦WºÙ:");
+									} else if (message.equals("/invite")) {
+										this.out.println("è«‹è¼¸å…¥è¦é‚€è«‹çš„äººçš„åç¨±:");
 										this.out.flush();
 										String user = this.in.readLine();
 										boolean check=false;
@@ -167,16 +167,16 @@ public class ChatHandler extends Thread {
 												handler.flag = true;
 												handler.inviteRoom = room;
 												handler.inviter=this.acc.user;
-												handler.out.println(this.acc.user + "ÁÜ½Ğ±z¶i¥Lªº²á¤Ñ«Ç¡A¶i¤J½Ğ¿é¤Jy¡A¤£¶i¤J½Ğ¿é¤Jn");
+												handler.out.println(this.acc.user + "é‚€è«‹æ‚¨é€²ä»–çš„èŠå¤©å®¤ï¼Œé€²å…¥è«‹è¼¸å…¥yï¼Œä¸é€²å…¥è«‹è¼¸å…¥n");
 												handler.out.flush();
 												break;
 											}
 										}
 										if(check==false){
-											this.out.println("¥Ø«e½u¤W¨S¦³³o­Ó¤H¡A½Ğ­«·s¨Ï¥Î/invite¨Ã¿é¤J¥¿½T¦WºÙ\r\n");
+											this.out.println("ç›®å‰ç·šä¸Šæ²’æœ‰é€™å€‹äººï¼Œè«‹é‡æ–°ä½¿ç”¨/inviteä¸¦è¼¸å…¥æ­£ç¢ºåç¨±\r\n");
 											this.out.flush();
 										}
-									}*/ else {
+									}else {
 										for (int i = 0; i < room.room.size(); i++) {
 											synchronized (room.room) {
 												ChatHandler handler = (ChatHandler) room.room.elementAt(i);
@@ -193,7 +193,7 @@ public class ChatHandler extends Thread {
 									if (room.room.size() == 0) {
 										roomList.removeElement(room);
 									}
-									this.out.print("±z¤wÂ÷¶}©Ğ¶¡\r\n");
+									this.out.print("æ‚¨å·²é›¢é–‹æˆ¿é–“\r\n");
 									this.out.flush();
 								}
 							}
@@ -204,7 +204,7 @@ public class ChatHandler extends Thread {
 										this.out.flush();
 									}
 								} else {
-									this.out.print("¥Ø«e¨S¦³©Ğ¶¡¡A½Ğ¿é¤J/room¨Ó«Ø¥ß\r\n");
+									this.out.print("ç›®å‰æ²’æœ‰æˆ¿é–“ï¼Œè«‹è¼¸å…¥/roomä¾†å»ºç«‹\r\n");
 									this.out.flush();
 								}
 							}
@@ -213,7 +213,7 @@ public class ChatHandler extends Thread {
 								this.flag=false;
 								synchronized (this.inviteRoom.room) {
 									this.inviteRoom.room.addElement(this);
-									this.out.println("±z¤w¶i¤J" + inviteRoom.name + "©Ğ\r\n");
+									this.out.println("æ‚¨å·²é€²å…¥" + inviteRoom.name + "æˆ¿\r\n");
 									this.out.print(roomHelp);
 									this.out.flush();
 								}
@@ -241,7 +241,7 @@ public class ChatHandler extends Thread {
 										this.out.println(onlineList);
 										this.out.flush();
 									} else if (message.equals("/invite")) {
-										this.out.println("½Ğ¿é¤J­nÁÜ½Ğªº¤Hªº¦WºÙ:");
+										this.out.println("è«‹è¼¸å…¥è¦é‚€è«‹çš„äººçš„åç¨±:");
 										this.out.flush();
 										String user = this.in.readLine();
 										boolean check=false;
@@ -252,12 +252,12 @@ public class ChatHandler extends Thread {
 												handler.flag = true;
 												handler.inviteRoom = this.inviteRoom;
 												handler.inviter=this.acc.user;
-												handler.out.println(this.acc.user + "ÁÜ½Ğ±z¶i¥Lªº²á¤Ñ«Ç¡A¶i¤J½Ğ¿é¤Jy¡A¤£¶i¤J½Ğ¿é¤Jn");
+												handler.out.println(this.acc.user + "é‚€è«‹æ‚¨é€²ä»–çš„èŠå¤©å®¤ï¼Œé€²å…¥è«‹è¼¸å…¥yï¼Œä¸é€²å…¥è«‹è¼¸å…¥n");
 												handler.out.flush();
 											}
 										}
 										if(check==false){
-											this.out.println("¥Ø«e½u¤W¨S¦³³o­Ó¤H¡A½Ğ­«·s¨Ï¥Î/invite¨Ã¿é¤J¥¿½T¦WºÙ\r\n");
+											this.out.println("ç›®å‰ç·šä¸Šæ²’æœ‰é€™å€‹äººï¼Œè«‹é‡æ–°ä½¿ç”¨/inviteä¸¦è¼¸å…¥æ­£ç¢ºåç¨±\r\n");
 											this.out.flush();
 										}
 									} else {
@@ -278,7 +278,7 @@ public class ChatHandler extends Thread {
 									if (this.inviteRoom.room.size() == 0) {
 										roomList.removeElement(this.inviteRoom.room);
 									}
-									this.out.print("±z¤wÂ÷¶}©Ğ¶¡\r\n");
+									this.out.print("æ‚¨å·²é›¢é–‹æˆ¿é–“\r\n");
 									this.out.flush();
 								}
 							}
@@ -288,7 +288,7 @@ public class ChatHandler extends Thread {
 									synchronized (online) {
 										ChatHandler handler = (ChatHandler) online.elementAt(i);
 										if (this.inviter.equals(handler.acc.user)) {
-											handler.out.println(this.user+"©Úµ´±zªºÁÜ½Ğ");
+											handler.out.println(this.user+"æ‹’çµ•æ‚¨çš„é‚€è«‹");
 											handler.out.flush();
 										}
 									}
@@ -301,10 +301,10 @@ public class ChatHandler extends Thread {
 							if (line.equals("/chat")) {
 								String message;
 								int id;
-								this.out.print("½Ğ¿é¤J±z­n¶i¤J²Ä´X¶¡©Ğ¶¡:\r\n");
+								this.out.print("è«‹è¼¸å…¥æ‚¨è¦é€²å…¥ç¬¬å¹¾é–“æˆ¿é–“:\r\n");
 								this.out.flush();
 								id = Integer.parseInt(this.in.readLine()) - 1;
-								this.out.print("\r\n¤w¶i¤J" + roomList.get(id).name + "©Ğ\r\n");
+								this.out.print("\r\nå·²é€²å…¥" + roomList.get(id).name + "æˆ¿\r\n");
 								this.out.flush();
 								synchronized (roomList.get(id).room) {
 									roomList.get(id).room.addElement(this);
@@ -313,7 +313,7 @@ public class ChatHandler extends Thread {
 								this.out.flush();
 								while (!(message = this.in.readLine()).equalsIgnoreCase("/exit")) {
 									if(message.equals("/help")){
-										this.out.print("\r\n¤w¶i¤J" + roomList.get(id).name + "©Ğ\r\n");
+										this.out.print("\r\nå·²é€²å…¥" + roomList.get(id).name + "æˆ¿\r\n");
 										this.out.flush();
 									}
 									if (message.equals("/user")) {
@@ -331,7 +331,7 @@ public class ChatHandler extends Thread {
 										this.out.println(onlineList);
 										this.out.flush();
 									} else if (message.equals("/invite")) {
-										this.out.println("½Ğ¿é¤J­nÁÜ½Ğªº¤Hªº¦WºÙ:");
+										this.out.println("è«‹è¼¸å…¥è¦é‚€è«‹çš„äººçš„åç¨±:");
 										this.out.flush();
 										String user = this.in.readLine();
 										boolean check=false;
@@ -342,12 +342,12 @@ public class ChatHandler extends Thread {
 												handler.flag = true;
 												handler.inviteRoom = roomList.get(id);
 												handler.inviter=this.acc.user;
-												handler.out.println(this.acc.user + "ÁÜ½Ğ±z¶i¥Lªº²á¤Ñ«Ç¡A¶i¤J½Ğ¿é¤Jy¡A¤£¶i¤J½Ğ¿é¤Jn");
+												handler.out.println(this.acc.user + "é‚€è«‹æ‚¨é€²ä»–çš„èŠå¤©å®¤ï¼Œé€²å…¥è«‹è¼¸å…¥yï¼Œä¸é€²å…¥è«‹è¼¸å…¥n");
 												handler.out.flush();
 											}
 										}
 										if(check==false){
-											this.out.println("¥Ø«e½u¤W¨S¦³³o­Ó¤H¡A½Ğ­«·s¨Ï¥Î/invite¨Ã¿é¤J¥¿½T¦WºÙ\r\n");
+											this.out.println("ç›®å‰ç·šä¸Šæ²’æœ‰é€™å€‹äººï¼Œè«‹é‡æ–°ä½¿ç”¨/inviteä¸¦è¼¸å…¥æ­£ç¢ºåç¨±\r\n");
 											this.out.flush();
 										}
 									} else {
@@ -368,14 +368,14 @@ public class ChatHandler extends Thread {
 									if (roomList.get(id).room.size() == 0) {
 										roomList.removeElement(roomList.get(id).room);
 									}
-									this.out.print("±z¤wÂ÷¶}©Ğ¶¡\r\n");
+									this.out.print("æ‚¨å·²é›¢é–‹æˆ¿é–“\r\n");
 									this.out.flush();
 								}
 							}
 						}
 
 					} else {
-						this.out.println("µn¤J¥¢±Ñ,±z¿é¤Jªº±b¸¹©Î±K½X¿ù»~");
+						this.out.println("ç™»å…¥å¤±æ•—,æ‚¨è¼¸å…¥çš„å¸³è™Ÿæˆ–å¯†ç¢¼éŒ¯èª¤");
 						this.out.flush();
 					}
 				}
